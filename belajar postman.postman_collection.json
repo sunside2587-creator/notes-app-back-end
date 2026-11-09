@@ -1,0 +1,383 @@
+{
+  "info": {
+    "_postman_id": "269d1ca8-1d40-4c1f-ad07-ac6cc8b5445e",
+    "name": "belajar postman",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53897537",
+    "_collection_link": "https://go.postman.co/collection/53897537-269d1ca8-1d40-4c1f-ad07-ac6cc8b5445e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "nambah catatan",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('response status code should have 201 value', () => {\r",
+              "   pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.test('response Content-Type header should have application/json value', () => {\r",
+              "  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+              "});\r",
+              "\r",
+              "pm.test('response body should an object', () => {\r",
+              "    const responseJson = pm.response.json();\r",
+              "    pm.expect(responseJson).to.be.an('object');\r",
+              "}); \r",
+              "\r",
+              "pm.test('response body should have correct property and value', () => {\r",
+              "    const responseJson = pm.response.json();\r",
+              "    pm.expect(responseJson).to.ownProperty('status');\r",
+              "    pm.expect(responseJson.status).to.equals('success');\r",
+              "    pm.expect(responseJson).to.ownProperty('message');\r",
+              "    pm.expect(responseJson.message).to.equals('Catatan berhasil ditambahkan');\r",
+              "    pm.expect(responseJson).to.ownProperty('data');\r",
+              "    pm.expect(responseJson.data).to.be.an('object');\r",
+              "});\r",
+              "\r",
+              "pm.test('response body data should have noteId and it should not be empty', () => {\r",
+              "    const { data } = pm.response.json();\r",
+              "\r",
+              "    pm.expect(data).to.have.property('noteId');\r",
+              "    pm.expect(data.noteId).to.not.equal('');\r",
+              "});\r",
+              "\r",
+              "pm.test('response body data should have noteId property and not equal to empty', () => {\r",
+              "    const responseJson = pm.response.json();\r",
+              "    const { data } = responseJson;\r",
+              " \r",
+              "    pm.expect(data).to.ownProperty('noteId');\r",
+              "    pm.expect(data.noteId).to.not.equals('');\r",
+              " \r",
+              "    pm.environment.set('noteId', data.id);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Catatan c\",\r\n    \"tags\": [\"Androwecwewegid\", \"Wweceweb\",\"dwcewecwildo\"],\r\n    \"body\": \"bahaya pacaran di usia remaja\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/notes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "notes"
+          ]
+        },
+        "description": "belajar postman"
+      },
+      "response": []
+    },
+    {
+      "name": "lihat semua catatan",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code harus 200', () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test('Content-Type harus application/json', () => {\r",
+              "    pm.expect(pm.response.headers.get('Content-Type'))\r",
+              "        .to.include('application/json');\r",
+              "});\r",
+              "\r",
+              "pm.test('Response body harus berupa object', () => {\r",
+              "    pm.expect(pm.response.json()).to.be.an('object');\r",
+              "});\r",
+              "\r",
+              "pm.test('Body memiliki properti dan tipe data yang sesuai', () => {\r",
+              "    const responseJson = pm.response.json();\r",
+              "\r",
+              "    pm.expect(responseJson).to.have.property('status');\r",
+              "    pm.expect(responseJson.status).to.be.a('string');\r",
+              "\r",
+              "    pm.expect(responseJson).to.have.property('data');\r",
+              "    pm.expect(responseJson.data).to.be.an('object');\r",
+              "\r",
+              "    pm.expect(responseJson.data).to.have.property('notes');\r",
+              "    pm.expect(responseJson.data.notes).to.be.an('array');\r",
+              "});\r",
+              "\r",
+              "pm.test('Array notes memiliki minimal 1 item', () => {\r",
+              "    const responseJson = pm.response.json();\r",
+              "\r",
+              "    pm.expect(responseJson.data.notes).to.have.lengthOf.at.least(1);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/notes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "notes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "lihat berdasarkan id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const responseJson = pm.response.json();\r",
+              "\r",
+              "pm.test('Status code harus 200', () => {\r",
+              "  pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test('Content-Type harus application/json', () => {\r",
+              "  pm.expect(pm.response.headers.get('Content-Type'))\r",
+              "    .to.include('application/json');\r",
+              "});\r",
+              "\r",
+              "pm.test('Response body harus berupa object', () => {\r",
+              "  pm.expect(responseJson).to.be.an('object');\r",
+              "});\r",
+              "\r",
+              "pm.test('Body memiliki properti status dan data dengan tipe yang sesuai', () => {\r",
+              "  pm.expect(responseJson).to.have.property('status');\r",
+              "  pm.expect(responseJson.status).to.be.a('string');\r",
+              "\r",
+              "  pm.expect(responseJson).to.have.property('data');\r",
+              "  pm.expect(responseJson.data).to.be.an('object');\r",
+              "});\r",
+              "\r",
+              "pm.test('data memiliki properti note berupa object', () => {\r",
+              "  pm.expect(responseJson.data).to.have.property('note');\r",
+              "  pm.expect(responseJson.data.note).to.be.an('object');\r",
+              "});\r",
+              "\r",
+              "pm.test('note memiliki id, title, body, dan tags dengan tipe yang sesuai', () => {\r",
+              "  const note = responseJson.data.note;\r",
+              "\r",
+              "  pm.expect(note).to.have.property('id').that.is.a('string').and.not.empty;\r",
+              "  pm.expect(note).to.have.property('title').that.is.a('string');\r",
+              "  pm.expect(note).to.have.property('body').that.is.a('string');\r",
+              "  pm.expect(note).to.have.property('tags').that.is.an('array');\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/notes/{{noteId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "notes",
+            "{{noteId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update catatan",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "pm.collectionVariables.set('expectedTitle', 'Judul terbaru');\r",
+              "pm.collectionVariables.set('expectedBody', 'Isi catatan terbaru');\r",
+              "pm.collectionVariables.set('expectedTags', JSON.stringify(['tag-baru']));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const responseJson = pm.response.json();\r",
+              "\r",
+              "pm.test('Status code harus 200', () => {\r",
+              "  pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test('Content-Type harus application/json', () => {\r",
+              "  pm.expect(pm.response.headers.get('Content-Type'))\r",
+              "    .to.include('application/json');\r",
+              "});\r",
+              "\r",
+              "pm.test('Response body harus berupa object', () => {\r",
+              "  pm.expect(responseJson).to.be.an('object');\r",
+              "});\r",
+              "\r",
+              "pm.test('Response memiliki properti status dan data', () => {\r",
+              "  pm.expect(responseJson).to.have.property('status');\r",
+              "  pm.expect(responseJson.status).to.be.a('string');\r",
+              "\r",
+              "  pm.expect(responseJson).to.have.property('data');\r",
+              "  pm.expect(responseJson.data).to.be.an('object');\r",
+              "});\r",
+              "\r",
+              "pm.test('Catatan yang dikembalikan memiliki nilai terbaru', () => {\r",
+              "  const note = responseJson.data.note;\r",
+              "\r",
+              "  pm.expect(note).to.be.an('object');\r",
+              "  pm.expect(note.title).to.eql(pm.collectionVariables.get('expectedTitle'));\r",
+              "  pm.expect(note.body).to.eql(pm.collectionVariables.get('expectedBody'));\r",
+              "  pm.expect(note.tags).to.eql(\r",
+              "    JSON.parse(pm.collectionVariables.get('expectedTags'))\r",
+              "  );\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Catatan A \",\r\n    \"tags\": [\"Android\", \"Web\"],\r\n    \"body\": \"Isi dari Catatan A Revised\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/notes/{{noteId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "notes",
+            "{{noteId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "hapus catatan",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code harus 200', () => {\r",
+              "  pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test('Content-Type harus application/json', () => {\r",
+              "  pm.expect(pm.response.headers.get('Content-Type'))\r",
+              "    .to.include('application/json');\r",
+              "});\r",
+              "\r",
+              "pm.test('Response body harus berupa object', () => {\r",
+              "  pm.expect(pm.response.json()).to.be.an('object');\r",
+              "});\r",
+              "\r",
+              "pm.test('Response memiliki properti status', () => {\r",
+              "  const responseJson = pm.response.json();\r",
+              "\r",
+              "  pm.expect(responseJson).to.have.property('status');\r",
+              "  pm.expect(responseJson.status).to.be.a('string');\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "http://localhost:3000/notes/{{noteId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "notes",
+            "{{noteId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "expectedTitle",
+      "value": ""
+    },
+    {
+      "key": "expectedBody",
+      "value": ""
+    },
+    {
+      "key": "expectedTags",
+      "value": ""
+    }
+  ]
+}
