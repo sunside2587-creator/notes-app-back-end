@@ -51,7 +51,7 @@
               "    pm.expect(data).to.ownProperty('noteId');\r",
               "    pm.expect(data.noteId).to.not.equals('');\r",
               " \r",
-              "    pm.environment.set('noteId', data.id);\r",
+              "    pm.environment.set('noteId', data.noteId);\r",
               "});"
             ],
             "type": "text/javascript",
@@ -288,7 +288,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"title\": \"Catatan A \",\r\n    \"tags\": [\"Android\", \"Web\"],\r\n    \"body\": \"Isi dari Catatan A Revised\"\r\n}",
+          "raw": "{\r\n    \"title\": \"Judul terbaru\",\r\n    \"tags\": [\"tag-baru\"],\r\n    \"body\": \"Isi catatan terbaru\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
