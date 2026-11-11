@@ -1,2 +1,4 @@
 node_modules
-sanset2587-API-webserver.pem
+notes-api-web-server.pem
+.env
+.prod.env
