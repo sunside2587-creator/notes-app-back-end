@@ -1,9 +1,17 @@
+import 'dotenv/config';
 import { Pool } from 'pg';
 import { nanoid } from 'nanoid';
 
 class NoteRepositories {
   constructor() {
-    this.pool = new Pool();
+    this.pool = new Pool({
+      user: process.env.PGUSER,
+      host: process.env.PGHOST,
+      database: process.env.PGDATABASE,
+      password: process.env.PGPASSWORD,
+      port: process.env.PGPORT,
+      ssl: process.env.PGHOST !== 'localhost' ? { rejectUnauthorized: false } : false,
+    });
   }
 
   async createNote({ title, body, tags }) {
